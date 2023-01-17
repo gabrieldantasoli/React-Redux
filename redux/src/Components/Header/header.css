@@ -1,0 +1,37 @@
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0;
+    padding:  10px;
+}
+
+.logo {
+    font-size: 40px;
+}
+
+.reserva {
+    font-size: 25px;
+    text-decoration: none;
+}
+
+.reserva * {
+    transition: ease-in-out 0.5s;
+}
+
+.reserva:hover * {
+    transform: scale(1.05);
+}
+
+.reserva span {
+    font-size: 20px;
+    margin-top: 2px;
+    color: #888;
+}
+
+.reserva > div {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
