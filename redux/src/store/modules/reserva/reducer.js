@@ -16,12 +16,8 @@ export default function reserva(state = [], action) {
                 }
             });
             
-        case 'UPDATE_RESERVE':
+        case 'UPDATE_RESERVE_SUCCESS':
             return produce(state, draft => {
-                if (action.amount <= 0) {
-                    return state;
-                }
-                
                 const tripIndex = draft.findIndex(trip => trip.id === action.id);   
 
                 if (tripIndex >= 0) {

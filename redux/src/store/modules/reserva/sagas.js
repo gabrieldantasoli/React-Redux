@@ -1,5 +1,5 @@
 import api from '../../../Services/api';
-import { addReserveSuccess, updateAmount } from './actions';
+import { addReserveSuccess , updateAmountSuccess } from './actions';
 import { select , call , put , all , takeLatest } from 'redux-saga/effects';
 
 function* addToReserve({ id }) {
@@ -20,7 +20,7 @@ function* addToReserve({ id }) {
     }
 
     if (tripExists) {
-        yield put(updateAmount(id, amount));
+        yield put(updateAmountSuccess(id, amount));
     } else {
         // esse get n ta pegando o objeto trips devido a minha api de lixo (ACREDITO)
         const response = yield call(api.get, `/trips/${id}`);
@@ -35,6 +35,22 @@ function* addToReserve({ id }) {
     }
 }
 
+function* updateAmount({ id , amount }) {
+    if (amount <= 0) return;
+
+    const myStock = yield call(api.get, `/stock/${id}`);
+
+    const stockAmount = myStock.data["stock"][Number(id)].amount;
+
+    if (amount > stockAmount) {
+        alert("Quantidade maxima premitida atingida!");
+        return;
+    }
+
+    yield put(updateAmountSuccess(id , amount));
+}
+
 export default all([
-    takeLatest('ADD_RESERVE_REQUEST', addToReserve)
+    takeLatest('ADD_RESERVE_REQUEST', addToReserve),
+    takeLatest('UPDATE_RESERVE_REQUEST', updateAmount)
 ])
