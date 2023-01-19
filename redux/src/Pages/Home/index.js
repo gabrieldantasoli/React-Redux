@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from "react";
 
 import api from "../../Services/api";
+import './home.css';
+import { MdFlightTakeoff } from 'react-icons/md';
 
 export default () => {
 
     const [stock , setStock] = useState([]);
     const [trips , setTrips] = useState([]);
+    const numbers = [1, 2, 3, 4, 5];
 
     useEffect(() => {
         async function loadInfo() {
             const response = await api.get('');
-            setStock(JSON.stringify(response.data["stock"]));
-            setTrips(JSON.stringify(response.data["trips"]));
-            response.data["trips"].map((r) => {
-                console.log(r);
+            let trips = [];
+            let stock = [];
+            response.data['trips'].map((doc) => {
+                trips.push({"id": doc.id, "title": doc.title, "Viagem": doc.Viagem, "image": doc.image,"status": doc.status});
             })
+            response.data['stock'].map((doc) => {
+                stock.push({"id": doc.id, "amount": doc.amount});
+            })
+            setTrips(trips);
+            setStock(stock);
         }
 
         loadInfo();
@@ -23,7 +31,20 @@ export default () => {
     return(
         <div>
             <div className="box">
-                {trips}
+                {trips.map((trip) => {
+                    return(
+                       <li key={trip.id}>
+                        <img src={trip.image} alt={trip.title} />
+                        <strong>{trip.title}</strong>
+                        <span>Status : {trip.status === true ? "Disponível" : "Indeisponível"}</span>
+
+                        <button type="button" onClick={() => {}}>
+                            <div><MdFlightTakeoff /></div>
+                            <span>SOLICITAR RESERVA</span>
+                        </button>
+                    </li> 
+                    )
+                })}
             </div>
         </div>
     )
