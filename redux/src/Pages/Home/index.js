@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import api from "../../Services/api";
 import './home.css';
 import { MdFlightTakeoff } from 'react-icons/md';
 
 export default () => {
+    const dispatch = useDispatch();
 
     const [stock , setStock] = useState([]);
     const [trips , setTrips] = useState([]);
@@ -28,6 +30,13 @@ export default () => {
         loadInfo();
     })
 
+    function handleAdd(trip) {
+       dispatch({
+        type: 'ADD_RESERVE',
+        trip
+       })
+    }
+
     return(
         <div>
             <div className="box">
@@ -38,7 +47,7 @@ export default () => {
                         <strong>{trip.title}</strong>
                         <span>Status : {trip.status === true ? "Disponível" : "Indeisponível"}</span>
 
-                        <button type="button" onClick={() => {}}>
+                        <button type="button" onClick={() => handleAdd(trip)}>
                             <div><MdFlightTakeoff /></div>
                             <span>SOLICITAR RESERVA</span>
                         </button>
