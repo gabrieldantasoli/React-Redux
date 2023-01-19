@@ -52,3 +52,20 @@ footer button:hover {
     transform: scale(1.1);
     box-shadow: 0 0 4px #fff;
 }
+
+.crement {
+    filter: invert(1);
+    font-size: 18px;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.info button {
+    background-color: transparent;
+    padding: 3px;
+    margin:  -0 5px;
+}
