@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { addReserve } from "../../store/modules/reserva/actions";
+import { addReserveRequest } from "../../store/modules/reserva/actions";
 
 import api from "../../Services/api";
 import './home.css';
@@ -32,8 +32,8 @@ export default () => {
         loadInfo();
     })
 
-    function handleAdd(trip) {
-       dispatch(addReserve(trip));
+    function handleAdd(id) {
+       dispatch(addReserveRequest(id));
     }
 
     return(
@@ -45,8 +45,7 @@ export default () => {
                         <img src={trip.image} alt={trip.title} />
                         <strong>{trip.title}</strong>
                         <span>Status : {trip.status === true ? "Disponível" : "Indeisponível"}</span>
-
-                        <button type="button" onClick={() => handleAdd(trip)}>
+                        <button type="button" onClick={() => handleAdd(trip.id)}>
                             <div><MdFlightTakeoff /></div>
                             <span>SOLICITAR RESERVA</span>
                         </button>
